@@ -1,0 +1,40 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+    branches: [ main ]
+
+env:
+  CONTAINER_CONTEXT_PATH: "docker"
+  DOCKERFILE_PATH: "docker/Dockerfile"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set tags for docker container
+        run: |
+          if ${{ github.event_name == 'pull_request' }}; then
+            echo CONTAINER_TAG=pr-${{github.head_ref}}-$(date +%Y%m%d).${{github.run_number}} | sed -e "s/\//\-/g" >> $GITHUB_ENV
+          else
+            echo CONTAINER_TAG=${{github.ref_name}}-$(date +%Y%m%d).${{github.run_number}} | sed -e "s/\//-/g" >> $GITHUB_ENV
+          fi
+
+      - name: Checkout Main
+        uses: actions/checkout@v2
+
+      - name: set Java 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: build
+
+      - name: Build the Docker image
+        run: docker build ${{ env.CONTAINER_CONTEXT_PATH }} --file ${{ env.DOCKERFILE_PATH }} --tag rest-docs-api:${{ env.CONTAINER_TAG }}

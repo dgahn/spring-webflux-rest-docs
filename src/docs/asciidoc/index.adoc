@@ -1,0 +1,37 @@
+= 메시지 서비스의 메시지 발송 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:sectnums:
+:snippets: build/generated-snippets
+
+== 개요
+
+이 문서는 메시지 서비스의 메시지 발송 API에 대해서 기술합니다.
+
+== 프로모션 API
+
+=== 프로모션 생성 API - OK(200)
+==== Request
+include::{snippets}/create-promotion-ok/http-request.adoc[]
+include::{snippets}/create-promotion-ok/request-fields.adoc[]
+==== Response
+include::{snippets}/create-promotion-ok/http-response.adoc[]
+include::{snippets}/create-promotion-ok/response-fields.adoc[]
+
+=== 프로모션 생성 API - BAD REQUEST(400, message가 없는 경우)
+==== Request
+include::{snippets}/create-promotion-bad-request-by-empty-message/http-request.adoc[]
+include::{snippets}/create-promotion-bad-request-by-empty-message/request-fields.adoc[]
+==== Response
+include::{snippets}/create-promotion-bad-request-by-empty-message/http-response.adoc[]
+include::{snippets}/create-promotion-bad-request-by-empty-message/response-fields.adoc[]
+
+=== 프로모션 생성 API - BAD REQUEST(400, recipient가 빈 경우)
+==== Request
+include::{snippets}/create-promotion-bad-request-by-empty-recipients/http-request.adoc[]
+include::{snippets}/create-promotion-bad-request-by-empty-recipients/request-fields.adoc[]
+==== Response
+include::{snippets}/create-promotion-bad-request-by-empty-recipients/http-response.adoc[]
+include::{snippets}/create-promotion-bad-request-by-empty-recipients/response-fields.adoc[]
